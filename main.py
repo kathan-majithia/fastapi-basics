@@ -6,3 +6,7 @@ app = FastAPI()
 def index():
     return 'Hello'
 
+@app.get('/about')
+def about():
+    return {"name":"Kathan Majithia"}
+
