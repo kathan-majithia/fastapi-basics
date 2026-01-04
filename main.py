@@ -10,3 +10,7 @@ def index():
 def about():
     return {"name":"Kathan Majithia"}
 
+@app.get('/blob/{id}')
+def show(id):
+    return {"data":id}
+
