@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from typing import Optional
 
 app = FastAPI(docs_url="/docs", redoc_url="/redoc")
 
@@ -11,7 +12,7 @@ def about():
     return {"name":"Kathan Majithia"}
 
 @app.get('/blob')
-def blob(limit=10,lod : bool = True):
+def blob(limit=10,lod : bool = True,sort: Optional[str] = None):
     if lod:
         return {"data" : f"{limit} blobs from the db"}
     else:
