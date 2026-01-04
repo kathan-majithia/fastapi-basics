@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from typing import Optional
 from pydantic import BaseModel
+import uvicorn
 
 app = FastAPI(docs_url="/docs", redoc_url="/redoc")
 
@@ -33,3 +34,5 @@ class Blob(BaseModel):
 def create(req: Blob):
     return {'data':f"Blob is created with title as {req.title}"}
 
+if __name__=="__main__":
+    uvicorn.run(app,host="127.0.0.1",port=8200)
