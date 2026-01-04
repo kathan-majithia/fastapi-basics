@@ -39,6 +39,18 @@ def show(id: int,res: Response, db: Session = Depends(get_db)):
 
 @app.delete('/blog/{id}',status_code=status.HTTP_204_NO_CONTENT)
 def delete(id: int, db: Session = Depends(get_db)):
-    db.query(models.Blog).filter(models.Blog.id == id).delete(synchronize_session=False)
+    blog = db.query(models.Blog).filter(models.Blog.id == id)
+    if not blog.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f'Blog with the id {id} is not available')
+    blog.delete(synchronize_session=False)
     db.commit()
     return {"data":"deleted"}
+
+@app.put('/blog/{id}',status_code=status.HTTP_202_ACCEPTED)
+def update(id: int,req: schemas.Blog, db: Session = Depends(get_db)):
+    blog = db.query(models.Blog).filter(models.Blog.id == id)
+    if not blog.first():
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=f'Blog with the id {id} is not available')
+    blog.update({'title':req.title,'body':req.body})
+    db.commit()
+    return {"data":"updated"}
