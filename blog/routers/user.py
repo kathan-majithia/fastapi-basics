@@ -15,7 +15,7 @@ def create(req: schemas.User, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
     
-@router.get('/user/{id}',response_model=schemas.User,tags=['Users'])
+@router.get('/user/{id}',response_model=schemas.ShowUser,tags=['Users'])
 def display(id: int ,db: Session = Depends(get_db)):
     user = db.query(models.User).options(joinedload(models.User.blogs)).filter(models.User.id == id).first()
     if not user:
