@@ -42,7 +42,7 @@ class User(UserBase):
     # name: str
     # email: str
     password: str
-    blog: Optional[List] = None
+    # blog: Optional[List] = None
     # user_id: int
     
     class Config:
