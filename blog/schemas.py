@@ -9,33 +9,41 @@ class BlogBase(BaseModel):
     #     orm_mode = True
         
         
-class Blog(BlogBase):
-    class Config():
-        orm_mode = True        
-class User(BaseModel):
+class UserBase(BaseModel):
     name: str
     email: str
-    password: str
-    blog: Optional[List] = None
-    # user_id: int
     
     class Config:
         orm_mode = True
+class Blog(BlogBase):
+    class Config():
+        orm_mode = True        
         
 class ShowBlog(BlogBase):
     title: str
-    creator: User
+    # creator: User
+    creator: Optional[UserBase]
     user_id: Optional[int]
     class Config():
         orm_mode = True
         
-class ShowUser(BaseModel):
+class ShowUser(UserBase):
 
-    name: str
-    email: str
+    # name: str
+    # email: str
+    id: int = Field(alias="user_id")
     blogs: List[ShowBlog] = []
     user_id: int = Field(alias="id")
     
     class Config():
         orm_mode = True
         allow_population_by_field_name = True
+class User(UserBase):
+    # name: str
+    # email: str
+    password: str
+    blog: Optional[List] = None
+    # user_id: int
+    
+    class Config:
+        orm_mode = True
