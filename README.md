@@ -23,18 +23,25 @@ Fastapi/
 ```
 
 ## 🐍 Creating a Virtual Environment
-
+```
 python -m venv venv
 
 venv\Scripts\activate
+```
+Activate the environment (Windows):
 
+Note: If you encounter permission errors regarding scripts, run the following command to bypass the execution policy for the current process:
+```
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+```
 ## Installing Dependencies
+```
 pip install -r requirements.txt
-
+```
 For Version Compatiblity
-
+```
 pip install "fastapi<0.100" "pydantic<2.0"
-
+```
 ## Running the Server
 ```
 uvicorn app.main:app --reload
@@ -60,3 +67,10 @@ Run using `main.py` command
 ## API Documentation
 - Swagger UI: http://127.0.0.1:8000/docs
 - ReDoc: http://127.0.0.1:8000/redoc
+
+## 🗄️ SQLite3 CLI Cheatsheet
+If inspecting the .db file manually using the sqlite3 command line:
+
+.tables → Show all tables in the database.
+
+.schema → Show the CREATE statements (schema) for tables.
