@@ -4,14 +4,17 @@ from .. import schemas, models
 from sqlalchemy.orm import Session
 from ..database import get_db
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/blog",
+    tags=['Blogs']
+)
 
-@router.get('/blog',response_model=List[schemas.ShowBlog],tags=['Blogs'])
+@router.get('/',response_model=List[schemas.ShowBlog])
 def all(db: Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
     return blogs
 
-@router.post('/blog',status_code=status.HTTP_201_CREATED, tags=['Blogs'])
+@router.post('/',status_code=status.HTTP_201_CREATED)
 def create(req: schemas.Blog,db: Session = Depends(get_db)):
     new_blog = models.Blog(title=req.title,body=req.body,user_id=1)
     db.add(new_blog)
@@ -20,7 +23,7 @@ def create(req: schemas.Blog,db: Session = Depends(get_db)):
     return req
 
 
-@router.get('/blog/{id}', status_code=200,response_model=schemas.ShowBlog,tags=['Blogs'])
+@router.get('/{id}', status_code=200,response_model=schemas.ShowBlog)
 def show(id: int,res: Response, db: Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id).first()
     if not blog:
@@ -29,7 +32,7 @@ def show(id: int,res: Response, db: Session = Depends(get_db)):
         # return {'detail':f'Blog with the id {id} is not available'}
     return blog
 
-@router.delete('/blog/{id}',status_code=status.HTTP_204_NO_CONTENT,tags=['Blogs'])
+@router.delete('/{id}',status_code=status.HTTP_204_NO_CONTENT)
 def delete(id: int, db: Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id)
     if not blog.first():
@@ -38,7 +41,7 @@ def delete(id: int, db: Session = Depends(get_db)):
     db.commit()
     return {"data":"deleted"}
 
-@router.put('/blog/{id}',status_code=status.HTTP_202_ACCEPTED,tags=['Blogs'])
+@router.put('/{id}',status_code=status.HTTP_202_ACCEPTED)
 def update(id: int,req: schemas.Blog, db: Session = Depends(get_db)):
     blog = db.query(models.Blog).filter(models.Blog.id == id)
     if not blog.first():

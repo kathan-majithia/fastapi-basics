@@ -5,9 +5,12 @@ from sqlalchemy.orm import Session, joinedload
 from ..database import get_db
 from ..hashing import Hash
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/user",
+    tags=['Users']
+)
 
-@router.post('/user',tags=['Users'])
+@router.post('/')
 def create(req: schemas.User, db: Session = Depends(get_db)):
     new_user = models.User(name=req.name,email=req.email,password=Hash.bcrypt(req.password))
     db.add(new_user)
@@ -15,7 +18,7 @@ def create(req: schemas.User, db: Session = Depends(get_db)):
     db.refresh(new_user)
     return new_user
     
-@router.get('/user/{id}',response_model=schemas.ShowUser,tags=['Users'])
+@router.get('/{id}',response_model=schemas.ShowUser)
 def display(id: int ,db: Session = Depends(get_db)):
     user = db.query(models.User).options(joinedload(models.User.blogs)).filter(models.User.id == id).first()
     if not user:
