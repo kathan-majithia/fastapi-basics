@@ -11,16 +11,16 @@ router = APIRouter(
 )
 
 @router.post('/')
-def create(req: schemas.User, db: Session = Depends(get_db)):
+def create_new_user(req: schemas.User, db: Session = Depends(get_db)):
     return user.create_user(req,db)
     
 @router.get('/',response_model=List[schemas.ShowUser])
-def all(db: Session = Depends(get_db)):
+def display_all_users(db: Session = Depends(get_db)):
     return user.display_all(db)
 
 
 @router.get('/{id}',response_model=schemas.ShowUser)
-def display(id: int ,db: Session = Depends(get_db)):
+def display_specific_user(id: int ,db: Session = Depends(get_db)):
     return user.display_users(id,db)
 
 
