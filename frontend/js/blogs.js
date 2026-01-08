@@ -31,7 +31,7 @@ async function createBlog() {
     body: JSON.stringify({ title, body })
   });
 
-  window.location.href = "dashboard.html";
+  window.location.href = "/dashboard";
 }
 
 async function deleteBlog(id) {
