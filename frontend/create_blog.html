@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Create Blog</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <script src="/static/js/config.js"></script>
+  <script src="/static/js/guard.js"></script>
+  <script src="/static/js/blogs.js"></script>
+</head>
+
+<body onload="checkAuth()">
+
+<h2>Create Blog</h2>
+
+<input id="title" placeholder="Title">
+<textarea id="body" placeholder="Body"></textarea>
+
+<button onclick="createBlog()">Submit</button>
+
+</body>
+</html>
