@@ -74,3 +74,21 @@ If inspecting the .db file manually using the sqlite3 command line:
 .tables → Show all tables in the database.
 
 .schema → Show the CREATE statements (schema) for tables.
+
+## Hosting Frontend
+
+For normal hosting using python
+```
+python -m http.server 5500
+```
+
+Add the url in main.py
+```
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://127.0.0.1:8181"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
+```
