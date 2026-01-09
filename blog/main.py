@@ -16,26 +16,26 @@ app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["http://127.0.0.1:8181"],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"]
 )
 
-@app.get("/")
-def index():
-    return FileResponse("frontend/index.html")
+# @app.get("/")
+# def index():
+#     return FileResponse("frontend/index.html")
 
-@app.get("/{page_name}")
-def serve_pages(page_name: str):
-    file_path = f"frontend/{page_name}.html"
-    if not os.path.exists(file_path):
-        raise HTTPException(status_code=404)
-    return FileResponse(file_path)
+# @app.get("/{page_name}")
+# def serve_pages(page_name: str):
+#     file_path = f"frontend/{page_name}.html"
+#     if not os.path.exists(file_path):
+#         raise HTTPException(status_code=404)
+#     return FileResponse(file_path)
 
 
 
-app.mount('/static', StaticFiles(directory="frontend"),name="static")
+# app.mount('/static', StaticFiles(directory="frontend"),name="static")
 
 models.Base.metadata.create_all(eng)
 
